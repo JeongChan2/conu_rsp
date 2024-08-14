@@ -14,6 +14,7 @@
 
 /* 팝업창 내용 */
 .popup-content {
+  position: absolute;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -24,6 +25,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background-color: #fff;
+  background-image:
+  linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+  linear-gradient(#eee .1em, transparent .1em);
+  background-size: 100% 1.2em;
 }
 
 /* 팝업 닫기 버튼 */
@@ -35,11 +42,14 @@
   cursor: pointer;
 }
 
-.tmp {
-  border-radius: 30%;
-  background-size: cover;
-  background-position: center;
-  width: 500px;
-  height: 500px;
-  background-image: url('../resources/rsp.gif');
+.lose-gif {
+  background-image: url('../resources/lose.gif');
+}
+
+.win-gif {
+  background-image: url('../resources/win.gif');
+}
+
+.tie-gif {
+  background-image: url('../resources/tie.gif');
 }
