@@ -9,7 +9,7 @@ const Popup = ({ onClose, result}) => {
               <span className="close" onClick={onClose}>&times;</span>
               <h2>{result}</h2>
               <div className="tmp">{resultContents}</div>
-              <img src="https://www.nemopan.com/files/attach/images/6294/857/160/011/7f03eef3205abfde9050bf1f04749868.gif" alt="ss"/>
+              <img src="./resources/rsp.gif" alt="ss"/>
           </div>
       </div>
   );
