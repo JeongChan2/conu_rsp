@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import Box from './component/Box';
+import Popup from './component/Popup';
 
 //1. 박스 2개 (타이틀, 사진, 결과)
 //2. 가위 바위 보 버튼이 있다.
@@ -9,41 +10,70 @@ import Box from './component/Box';
 //5. 3 4의 결과를 가지고 누가 이겼는지 승패를 따진다
 //6. 승패결과에 따라 테두리 색이 바뀐다 (이기면-초록, 지면-빨강 비기면-검은색)
 
-const choice = {
-  rock: {
-    name: "Rock",
-    img: "https://cheonan.grandculture.net/Image?localName=cheonan&id=GC045P00213&t=middle"
-  },
-  scissors: {
-    name: "Scissors",
-    img: "https://cdn-icons-png.flaticon.com/512/4975/4975327.png"
-  },
-  paper: {
-    name: "Paper",
-    img: "https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/product/3280425752/B.jpg?544000000"
-  }
-}
+const choice = ["rock", "scissors", "paper"];
+
+// const choice = {
+//   rock: {
+//     name: "rock",
+//   },
+//   scissors: {
+//     name: "scissors",
+//   },
+//   paper: {
+//     name: "paper",
+//   }
+// }
 
 function App() {
   const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
 
   const play= (userChoice) => {
-    setUserSelect(choice[userChoice]);
+    setUserSelect(userChoice);
+    const computerChoice = randomChoice();
+    setComputerSelect(computerChoice)
+    setResult(judgement(userChoice, computerChoice));
+    openPopup()
+  }
 
+  const judgement = (user, computer) => {
+    if (user === computer){
+      return "tie";
+    } else if (user === "rock") {
+      return computer === "scissors"? "win":"lose";
+    } else if (user === "scissors") {
+      return computer === "rock"? "lose":"win";
+    } else { // paper
+      return computer === "rock"? "win":"lose";
+    }
+    
+  }
+
+  const randomChoice = () => {
+    const randomItem = Math.floor(Math.random() * choice.length);
+    const final = choice[randomItem];
+    return final;
   }
 
   return (
-    <div>
+    <div className='container'>
       <div className='main'>
-        <Box title="You" item={userSelect}/>
+        <Box title="You" item={userSelect} result={result}/>
 
-        <Box title="Computer"/>
+        <Box title="Computer" item={computerSelect} result={result}/>
       </div>
-      <div className='main'>
-        <button onClick={() => play("scissors")}>가위</button>
-        <button onClick={() => play("rock")}>바위</button>
-        <button onClick={() => play("paper")}>보</button>
+      <div className='button-main'>
+        <button className='button-image scissors' onClick={() => play("scissors")}></button>
+        <button className='button-image rock' onClick={() => play("rock")}></button>
+        <button className='button-image paper' onClick={() => play("paper")}></button>
       </div>
+
+      {isPopupOpen && <Popup onClose={closePopup} result={result}/>}
     </div>
   );
 }
